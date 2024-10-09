@@ -10,25 +10,56 @@ int min(int a,int b){
 	}
 	
 }
+void display(int D[],int n){
+	for (int i=0;i<n;i++){
+		cout<<D[i]<<" ";
+	}
+	cout<<endl;
+}
 int coinChange(int D[],int n,int m){
 	int F[n+1];
 	int B[n+1];
 	F[0]=0;
+	B[0]=-1;
 	for (int i=1;i<=n;i++){
 		int temp=numeric_limits<int>::max();
 		int j=0;
-		while (j<=m and i>=D[j]){
-			temp=min(F[i-D[j]],temp);
+		int b=-1;
+		while (j<m and i>=D[j]){
+			if (temp>F[i-D[j]]){
+				temp=F[i-D[j]];
+				b=j;
+			}
+			//temp=min(F[i-D[j]],temp);
 			j=j+1;
-			
 		}
 		F[i]=temp+1;
+		B[i]=b;
+		
 	}
 	for (int i=0;i<=n;i++){
 		cout<<F[i]<<" ";
 	}
 	cout<<endl;
-	return F[n];
+	for (int i=0;i<=n;i++){
+		cout<<B[i]<<" ";
+	}
+	cout<<endl;
+	int s=F[n];
+	int Arr[s];
+	int k=0;
+	while (n>0 and k<s){
+		int coinIndex=B[n];
+		int c=D[coinIndex];
+		Arr[k]=c;
+		n=n-c;
+		k++;
+	}
+	cout<<"The coins used are:";
+	for (int i=0;i<s;i++){
+		cout<<Arr[i]<<" ";
+	}
+	cout<<endl;
 }
 int main(){
 	cout<<"Enter the number of denominations you have:";
