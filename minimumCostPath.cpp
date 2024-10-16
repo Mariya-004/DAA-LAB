@@ -30,7 +30,7 @@ int coinCollect(int c[4][3]){
 			else{
 				temp=f[i-1][j];
 			}
-			if (temp<f[i-1][j-1]){
+			if (temp>f[i-1][j-1]){
 			    temp=f[i-1][j-1];
 			}
 			f[i][j]=temp+c[i][j];
@@ -50,6 +50,8 @@ int inp[4][3]={{3, 2, 8},
 	cout<<endl;
 	cout<<"Maximum number of coins collected is:"<<coinCollect(inp);
 }
+	
+		
 	
 		
 	
