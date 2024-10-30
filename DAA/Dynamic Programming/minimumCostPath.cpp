@@ -1,5 +1,16 @@
 #include<iostream>
 using namespace std;
+int min(int a,int b,int c){
+	if (a<c and a<b){
+		return a;
+	}
+	if(b<a and b<c){
+		return b;
+	}
+	if (c<a and c<b){
+		return c;
+	}
+}
 void display(int mat[4][3]){
 	for (int i=0;i<4;i++){
 		for(int j=0;j<3;j++){
@@ -15,41 +26,64 @@ int minimumCostPath(int c[4][3]){
 			f[i][j]=c[i][j];
 		}
 	}
-		for (int j=1;j<3;j++){            //first row of the matrix
-		f[0][j]=c[0][j]+f[0][j-1];
-	}
-	for (int i=1;i<4;i++){                           //first column of the matrix
-		f[i][0]=c[i][0]+f[i-1][0];
-	}
-	int arr[4];
-	int row=-1;
-	int col=-1;
-	arr[
-	for (int i=1;i<4;i++){
-		for(int j=1;j<3;j++){
-			int temp=1000;
-			if (f[i][j-1]<f[i-1][j]){
-				temp=f[i][j-1];
-				row=i;
-				col=j-1;
+	for (int i=0;i<4;i++){
+		for (int j=0;j<3;j++){
+			if (i==0 and j>0){
+				f[i][j]=f[i][j-1]+c[i][j];
 			}
-			else{
-				temp=f[i-1][j];
-				row=i-1;
-				col=j;
-			
+		    if (j==0 and i>0){
+				f[i][j]=f[i-1][j]+c[i][j];
 			}
-			if (temp>f[i-1][j-1]){
-			    temp=f[i-1][j-1];
-			    row=i-1;
-			    col=j-1;
+			if (i>0 and j>0){
+				f[i][j]=min(f[i-1][j],f[i][j-1],f[i-1][j-1])+c[i][j];
 			}
-			f[i][j]=temp+c[i][j];
 		}
 	}
-	display(f);
-
+//	display(f);
+	int A[100];
+	int i=3;
+	int j=2;
+	int el=-1;
+	int d=0;
+	while (i>0 or j>0){
+		if (i==0 and j>0){
+				el=f[i][j]-f[i][j-1];
+			}
+		    if (j==0 and i>0){
+				el=f[i][j]-f[i-1][j];
+			}
+			if (i>0 and j>0){
+				el=f[i][j]-min(f[i-1][j],f[i][j-1],f[i-1][j-1]);
+				
+			}
+			//cout<<el<<endl;
+			
+			if (f[i][j]-el==f[i-1][j]){
+				i=i-1;
+	
+			}
+			if (f[i][j]-el==f[i][j-1]){
+				j=j-1;
+				
+			}
+			if (f[i][j]-el==f[i-1][j-1]){
+				i=i-1;
+				j=j-1;
+			}
+			A[d]=el;
+			d++;
+			
+			
+		
+	}
+	A[d]=f[0][0];
+	cout<<"Path:";
+	for (int i=d;i>=0;i--){
+		cout<<A[i]<<" ";
+	}
+	cout<<endl;
 	return f[3][2];
+
 }
 int main(){
 int inp[4][3]={{3, 2, 8}, 
@@ -59,7 +93,7 @@ int inp[4][3]={{3, 2, 8},
 
 	display(inp);
 	cout<<endl;
-	minimumCostPath(inp);
+	cout<<minimumCostPath(inp);
 }
 	
 		
