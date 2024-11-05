@@ -8,34 +8,61 @@ int max(int a,int b){
 		return b;
 	}
 }
-void display(int mat[5][11]){
-	for (int i=0;i<5;i++){
-		for (int j=0;j<11;j++){
-			cout<<mat[i][j]<<" ";
+int max(int arr[],int n){
+	int max=arr[0];
+	int ind=-1;
+	for (int i=0;i<n;i++){
+		if (arr[i]>=max){
+			max=arr[i];
+			ind=i;
 		}
-		cout<<endl;
+		
 	}
+	return ind;
 }
-int knapsack(int w[],int v[],int n,int c){
-	int mat[5][11];
-	for (int i=0;i<=n;i++){
-		mat[i][0]=0;
-	}
-	for (int i=0;i<=c;i++){
-		mat[0][i]=0;
-	}
-	for (int i=1;i<=n;i++){
-		for (int j=1;j<=c;j++){
-			if (j-w[i-1]>=0){
-				mat[i][j]=max(mat[i-1][j],v[i-1]+mat[i-1][j-w[i-1]]);
-			}
-			else{
-				mat[i][j]=mat[i-1][j];
-			}
-		}
-	}
-	return mat[4][10];
-	
+int knapsack(int n,int c,int w[],int v[]){
+	int mat[n+1][c+1];
+	 for (int i=0;i<=n;i++){
+	 	mat[i][0]=0;
+	 }
+	 for (int i=0;i<=c;i++){
+	 	mat[0][i]=0;
+	 }
+	 for (int i=1;i<=n;i++){
+	 	for(int j=1;j<=c;j++){
+	 		if (j-w[i-1]>=0){
+	 			mat[i][j]=max(mat[i-1][j],v[i-1]+mat[i-1][j-w[i-1]]);
+			 }
+			 else{
+			 	mat[i][j]=mat[i-1][j];
+			 }
+		 }
+	 }
+	 for (int i=0;i<=n;i++){
+	 	for (int j=0;j<=c;j++){
+	 		cout<<mat[i][j]<<"\t";
+		 }
+		 cout<<endl;
+	 }
+	 int val=mat[n][c];
+	 int includeItems[n];// array to store included items
+	 int index=0; 
+	 int cap=c; // stores capacity
+	 for (int i=n;i>0;i++){
+	 	if (mat[i][cap]!=mat[i-1][cap]){
+	 		includeItems[index++]=i-1;
+	 		cap=cap-w[i-1];
+		 }
+	 }
+	 cout<<"Included items:";
+	 for (int i=index-1;i>=0;i--){
+	 	cout<<includedItems[i]<<" ";
+	 }
+    cout << endl;
+
+	return val;
+	 
+
 }
 int main(){
 	cout<<"ENTER THE CAPACITY OF THE KNAPSACK:";
@@ -47,14 +74,14 @@ int main(){
 	int W[n];
 	int V[n];
 	for (int i=0;i<n;i++){
-		cout<<"Enter the  weight of item:";
+		cout<<"ENTER THE WEIGHT OF ITEM:";
 		int w;
 		cin>>w;
 		W[i]=w;
-		cout<<"Enter the value of item:";
+		cout<<"ENTER THE VALUE OF ITEM:";
 		int v;
 		cin>>v;
 		V[i]=v;
 	}
-	cout<<"Maximum value:"<<knapsack(W,V,n,cap);
+	cout<<"Maximum value:"<<knapsack(n,cap,W,V);
 }
