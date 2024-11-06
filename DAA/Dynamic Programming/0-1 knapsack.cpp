@@ -8,18 +8,7 @@ int max(int a,int b){
 		return b;
 	}
 }
-int max(int arr[],int n){
-	int max=arr[0];
-	int ind=-1;
-	for (int i=0;i<n;i++){
-		if (arr[i]>=max){
-			max=arr[i];
-			ind=i;
-		}
-		
-	}
-	return ind;
-}
+
 int knapsack(int n,int c,int w[],int v[]){
 	int mat[n+1][c+1];
 	 for (int i=0;i<=n;i++){
