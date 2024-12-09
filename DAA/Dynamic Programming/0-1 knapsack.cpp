@@ -45,7 +45,7 @@ int knapsack(int n,int c,int w[],int v[]){
 	 }
 	 cout<<"Included items:";
 	 for (int i=index-1;i>=0;i--){
-	 	cout<<includedItems[i]<<" ";
+	 	cout<<includeItems[i]<<" ";
 	 }
     cout << endl;
 
